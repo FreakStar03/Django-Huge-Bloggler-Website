@@ -1,0 +1,83 @@
+{% extends "___base_blog.html" %} 
+{% block content %}
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        background-color: #fdfdfd;
+    }
+    #nav_selector{
+        margin-top: 10px
+    }
+    .active{
+        text-transform: uppercase;
+    }
+    
+    .head_text {
+        color: white;
+    }
+    
+    .card {
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
+</style>
+<div id='nav_selector'>
+    
+<ul class="nav nav-tabs " >
+  <li class="nav-item">
+    <a class="nav-link active" href="#">{{genre}}</a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Genre</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="../all">All</a>
+      <a class="dropdown-item" href="../blog">Blog</a>
+      <a class="dropdown-item" href="../politics">Politics</a>
+      <a class="dropdown-item" href="../food">Food</a>
+      <a class="dropdown-item" href="../fiction">Fiction</a>
+      <a class="dropdown-item" href="../speech">Speech</a>
+      <a class="dropdown-item" href="../lifestyle">LifeStyle</a>
+      <a class="dropdown-item" href="../sports">Sports</a>
+      <a class="dropdown-item" href="../diy">DIY</a>
+      <a class="dropdown-item" href="../fitness">Fitness</a>
+      <a class="dropdown-item" href="../travel">Travel</a>
+      <a class="dropdown-item" href="../fashion">Fashion</a>
+      <a class="dropdown-item" href="../tech">Tech</a>
+      <a class="dropdown-item" href="../games">Games</a>
+      <a class="dropdown-item" href="../movie_shows">Movie shows</a>
+    </div>
+  </li>
+</ul>
+</div>
+{% block banner %} {% include '__banner.html' %} {% endblock %}
+<div class="container">
+    <div class="row">
+        <!-- Blog Entries Column -->
+        <div class="col-md-8 mt-3 left">
+            {% for post in post_list %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">{{ post.title }}</h2>
+                    <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_on}} </p>
+                    <p class="card-text">{{post.Description|slice:":200"| safe }}</p>
+                    <a href="{% url 'post_detail' post.genre post.slug  %}" class="btn btn-primary">Continue to Read more &rarr;</a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">No Post Exist!</h2>
+                </div>
+            </div>
+
+            {% endfor %}
+        {% block paginator %} {% include '__paginator.html' %} {% endblock %}
+
+        </div>
+        {% block sidebar %} {% include '__sidebar.html' %} {% endblock sidebar %}
+
+    </div>
+
+
+</div>
+{%endblock%}

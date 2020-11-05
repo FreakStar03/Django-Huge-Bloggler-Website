@@ -1,0 +1,67 @@
+ {% block comment %}
+
+<style type="text/css">
+	
+	.date{
+		font-size: 11px
+	}
+
+	.comment_li{
+		list-style: none
+	}
+	.comment{
+		border-left: 4px solid black;
+		padding-left: 30px
+	}
+	.comment_body{
+		padding-left: 30px;
+		background-color: lightgrey;
+		border-bottom-right-radius: 50px ;
+		border-top-right-radius: 50px ;
+	}
+
+</style>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+	<h5>comment-section</h5>
+	<hr>
+     <h6>{{ comments.count }} comments</h6>
+     <hr>
+     {% if new_comment %}
+     <div class="alert alert-success" role="alert">
+       Your comment is awaiting moderation
+     </div>
+     {% else %}
+
+	<form  method="POST">
+		{% csrf_token %}
+       {{ comment_form.as_p }}
+	<button type="submit" value="submit" >Submit</button>
+	</form>
+     {% endif %}
+
+      {% for comment in comments %}
+      	    <div class="comment">
+      	      <li class="comment_li">
+      	        <strong>{{ comment.name }}</strong>
+      	        <div class="date"><spam class='date'>{{ comment.created_on }}</spam>
+      	        </div>
+      	        <div class="comment_body">
+      	        <p><spam id="comment_body">{{ comment.body | linebreaks }}</spam></p>
+      	        </div>
+      	      </li>
+      	      <hr/>
+      	    </div>
+      			{% empty %}
+      	    <p>No comments here yet :(</p>
+      		{% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+

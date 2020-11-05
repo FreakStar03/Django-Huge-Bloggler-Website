@@ -1,0 +1,96 @@
+
+{% block header  %}
+<script type="text/javascript">
+
+    function submitLoginForm(event){
+        event.preventDefault();
+
+        search_field_value = event.target['search_value'].value;
+        window.open('/search/' + search_field_value)
+    }
+</script>
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light shadow" id="mainNav">
+    <div class="container-fluid">
+        <a class="navbar-brand" href={% url 'home' genre='all' %}>Makardwaj Blogs</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="btn-group">
+          <button class="btn btn-secondary btn-sm" type="button">
+            {{genred}}<Spam> </Spam> |<Spam> </Spam> Genre
+          </button>
+          <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="../all">All</a>
+            <a class="dropdown-item" href="../blog">Blog</a>
+            <a class="dropdown-item" href="../politics">Politics</a>
+            <a class="dropdown-item" href="../food">Food</a>
+            <a class="dropdown-item" href="../fiction">Fiction</a>
+            <a class="dropdown-item" href="../speech">Speech</a>
+            <a class="dropdown-item" href="../lifestyle">LifeStyle</a>
+            <a class="dropdown-item" href="../sports">Sports</a>
+            <a class="dropdown-item" href="../diy">DIY</a>
+            <a class="dropdown-item" href="../fitness">Fitness</a>
+            <a class="dropdown-item" href="../travel">Travel</a>
+            <a class="dropdown-item" href="../fashion">Fashion</a>
+            <a class="dropdown-item" href="../tech">Tech</a>
+            <a class="dropdown-item" href="../games">Games</a>
+            <a class="dropdown-item" href="../movie_shows">Movie shows</a>
+          </div>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item text-black">
+                    <a class="nav-link text-black font-weight-bold" href={% url 'add_blog' %} disabled>
+                        {% load custom_tags %}
+                        {% if request.user|has_group:"pro_writer" %}
+                            Hello, {{request.user}} (pro_writer)
+                        {% elif request.user|has_group:"writer" %}
+                            Hello, {{request.user}} (writer)
+                        {% else %}
+                            Hello, visitor
+                        {% endif %}
+                    </a>
+                </li>
+                <li class="nav-item text-black">
+                    <a class="nav-link text-black font-weight-bold" href="#">Profile Page</a>
+                </li>
+                <li class="nav-item text-black">
+                    <a class="nav-link text-black font-weight-bold" href="#">Policy</a>
+                </li>
+                <li class="nav-item text-black">
+                    <a class="nav-link text-black font-weight-bold" href="#">Contact</a>
+                </li>
+                {% load custom_tags %}
+                {% if request.user|has_group:"pro_writer" %}
+                <li class="nav-item text-black">
+                    <a class="nav-link text-black font-weight-bold" href={% url 'logout' %}>Logout</a>
+                </li>
+                {% elif request.user|has_group:"writer" %}
+                <li class="nav-item text-black">
+                    <a class="nav-link text-black font-weight-bold" href={% url 'logout' %}>Logout</a>
+                </li>
+                {% else %}
+
+                {% endif %}
+                <form class="form-inline my-2 my-lg-0"  onsubmit="submitLoginForm(event)">
+                  <input id='search_input_box' class="form-control mr-sm-2" type="text" name='search_value' placeholder="Search" aria-label="Search">
+                  <button   type="submit" class="btn btn-outline-success my-2 my-sm-0" >Search</button>
+                </form>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% endblock %}
+<!--                     {% for group_for in request.user.groups.all %}
+                        {% if group_for.name == 'writer' %}
+                            Hello, {{request.user}}
+                        {% elif group_for.name == 'pro_writer' %}
+                            Hello, {{request.user}}
+                        {% endif %}
+                    {% endfor %} -->

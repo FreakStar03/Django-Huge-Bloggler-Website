@@ -1,0 +1,54 @@
+{% extends '___base_blog.html' %}
+{% block tags %} {{ post.tags }} {% endblock %}
+{% block content %}
+<style type="text/css">
+  #para {
+      white-space: pre-wrap;
+  }
+  .img__banner{
+    text-align: center;
+    background-color:  lightgrey;
+    width: 100%;
+    padding-right:100px; 
+    padding-left:100px;
+    margin: 10px
+
+  }
+  .title__post{
+    text-transform: uppercase;
+  }
+
+  .comment {
+      margin: 20px 0px 20px 20px;
+  }
+
+</style>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href={% url 'home' genre='all'%}>Home</a></li>
+    <li class="breadcrumb-item"><a href='../' %}>{{post.genre}}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{post.slug}}</li>
+  </ol>
+</nav>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+        <img class="img__banner" src='http://127.0.0.1:8000/uploads/{{ post.img }}'>
+        <center>
+        <h1 class="title__post">{% block title %} {{ object.title }} {% endblock title %}</h1>
+        </center>
+        <p class=" text-muted">{{ post.author }} | {{ post.created_on }}</p>
+        <div class="card-text " id='para'>{{ post.content | safe }}</div>
+      </div>
+    </div>
+    {% block sidebar %} {% include '__sidebar.html' %} {% endblock sidebar %}
+  </div>
+  <div>
+    <p><spam  class="badge badge-info"> tags:</spam>  <spam  class="badge badge-primary"> {{ post.tags }} </spam> </p>
+  </div>
+</div>
+<div class="comment__post">
+{% block comment %} {% include 'comment.html' %} {% endblock %}
+</div>
+{% endblock content %}

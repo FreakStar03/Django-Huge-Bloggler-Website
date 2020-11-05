@@ -1,0 +1,70 @@
+{% block sidebar %}
+
+<style>
+        .card{
+            box-shadow: 0 16px 48px #E3E7EB;
+        }
+        .sidebar__fix{  
+            position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+        }
+        @media only screen and (max-width: 600px){
+            .sidebar__fix{
+            position: static;
+            }
+        }
+</style>
+
+<!-- Sidebar Widgets Column -->
+<div id="">
+<div class="col-md-4 float-right sidebar__fix ">
+{% load custom_tags %}
+{% if request.user|has_group:"writer" %}
+    <div class="card my-4">
+            <h5 class="card-header">Hello {{request.user}}, write something</h5>
+        <div class="card-body">
+            <p class="card-text">Thanks for being a writer!</p>
+            <div class="button_set">
+            <a href={% url 'add_blog' %}
+               class="btn btn-danger">Write Another Blog!</a>
+            </div>
+        </div>
+    </div>
+{% elif request.user|has_group:"pro_writer" %}
+    <div class="card my-4">
+            <h5 class="card-header">Hello {{request.user}}, write something</h5>
+        <div class="card-body">
+            <p class="card-text">Thanks for being a writer!</p>
+            <div class="button_set">
+            <a href={% url 'add_blog' %}
+               class="btn btn-danger">Write Blog!</a>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="card my-4">
+            <h5 class="card-header">Why won't be a writer!</h5>
+        <div class="card-body">
+            <p class="card-text">Write Beautiful blogs on your passionated genre and we will review it and publish it on our website!</p>
+            <div class="button_set">
+            <a href={% url 'signup_login' %}
+               class="btn btn-danger">Get a writer account!</a>
+            
+            </div>
+        </div>
+    </div>
+{% endif %}
+<div class="card my-4">
+        <h5 class="card-header">About Us</h5>
+    <div class="card-body">
+        <p class="card-text"> This awesome blog with various autherization and server side rendering hardcoded with django..!</p>
+        <a href="https://djangocentral.com/building-a-blog-application-with-django"
+           class="btn btn-danger">Know more!</a>
+    </div>
+</div>
+
+</div>
+</div>
+
+
+
+{% endblock sidebar %}
